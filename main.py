@@ -5,7 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", device_map=device)
+model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-v0.1", device_map=device, cache_dir="/home/sharifm/teaching/tml-0368-4075/2024-spring/students/yohaimazuz/.cache")
 tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
 
 prompt = "My favourite condiment is"
