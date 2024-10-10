@@ -25,7 +25,26 @@ def tokenize_function(example):
         padding=True,
         max_length=512
     )
+    
+    # tokenized_inputs['input_ids'] = tokenized_inputs['input_ids'].tolist()[0]
+    
+    return tokenized_inputs
 
+def tokenize_function_artificial(example):
+    text = example['text']
+
+    tokenizer.truncation_side = "left"
+    tokenized_inputs = tokenizer(
+        text,
+        return_tensors='pt',
+        truncation=True,
+        padding=True,
+        max_length=512
+    )
+    
+    tokenized_inputs['input_ids'] = tokenized_inputs['input_ids'].tolist()[0]
+    tokenized_inputs['attention_mask'] = tokenized_inputs['attention_mask'].tolist()[0]
+    
     return tokenized_inputs
 
 if tokenizer.pad_token is None:

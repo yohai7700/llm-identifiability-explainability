@@ -1,7 +1,7 @@
 import torch
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from testing.model import tokenize_function
+from testing.model import tokenize_function, tokenize_function_artificial
 
 class ArtificialLlmTextDataset(torch.utils.data.Dataset):
     """Some Information about ArtificialLlmTextDataset"""
@@ -14,7 +14,7 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, index):
         original_text = self.original_dataset[index]['text']
-
+        
         if index % 2 == 0:
             text = original_text
             label = 0
@@ -29,10 +29,11 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
             text = self.llm_tokenizer.batch_decode(llm_tokens)[0]
             label = 1
 
-        tokenized_properties = tokenize_function({ 'text': text })
+        tokenized_properties = tokenize_function_artificial({ 'text': text })
         result = { 'text': text, 'label': label }
         result.update(tokenized_properties)
 
+        print(f'success: {index}')
         return result
 
     def __len__(self):
