@@ -19,6 +19,7 @@ def parse_args() -> Args:
     # Data arguments
     parser.add_argument("--data_path", type=str, default="./data", help="Path to the dataset")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size for training")
+    parser.add_argument("--cache_user", type=str, default=None, help="Use the cache directory of this user")
     
     # Model arguments
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
