@@ -9,10 +9,12 @@ print(f"Accelerate version: {accelerate.__version__}")
 print(f"PEFT version: {peft.__version__}")
 print(f"CUDA is available: {torch.cuda.is_available()}")
 
-from args import print_args
+from args import print_args, get_args
 from testing.training import trainer
 
 print_args()
+
+print(f'Cache User: {get_args().cache_user}')
 
 trainer.train()
 
