@@ -5,12 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Main B: T",
+      "name": "Debug Main B: Slurm Yohai",
       "type": "debugpy",
       "request": "launch",
       "program": "main_b.py",
       "console": "integratedTerminal",
       "args": ["--cache_user", "yohai"]
+    },
+        {
+      "name": "Debug Main B",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main_b.py",
+      "console": "integratedTerminal"
     }
   ]
 }

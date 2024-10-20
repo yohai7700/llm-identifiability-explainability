@@ -10,11 +10,20 @@ class Args:
     optimizer: str
     seed: int
     log_dir: str
+    task: str
 
 args: Args = None
 
 def parse_args() -> Args:
-    parser = argparse.ArgumentParser(description="PaceMaker Prediction - Arguments")
+    parser = argparse.ArgumentParser(description="LLM Detection - Arguments")
+
+    # Task Arguments
+    parser.add_argument("--task",
+        type=str, 
+        required=True,
+        help="Task to perform: train, test, predict or preprocess", 
+        choices=["train", "test", "predict", "preprocess"]
+    )
     
     # Data arguments
     parser.add_argument("--data_path", type=str, default="./data", help="Path to the dataset")
