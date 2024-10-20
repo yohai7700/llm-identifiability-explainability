@@ -1,7 +1,7 @@
 import torch
 
 from transformers import pipeline
-from model import tokenize_function_artificial
+from models.classification_model import tokenize_function_artificial
 
 class ArtificialLlmTextDataset(torch.utils.data.Dataset):
     """Some Information about ArtificialLlmTextDataset"""

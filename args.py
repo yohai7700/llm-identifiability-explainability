@@ -11,6 +11,13 @@ class Args:
     seed: int
     log_dir: str
     task: str
+    cache_dir: str
+    cache_user: str
+
+
+__KNOWN_CACHE_DIRS = {
+    "yohai": "/home/sharifm/teaching/tml-0368-4075/2024-spring/students/yohaimazuz/.cache"
+}
 
 args: Args = None
 
@@ -28,7 +35,8 @@ def parse_args() -> Args:
     # Data arguments
     parser.add_argument("--data_path", type=str, default="./data", help="Path to the dataset")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size for training")
-    parser.add_argument("--cache_user", type=str, default=None, help="Use the cache directory of this user")
+    parser.add_argument("--cache_user", type=str, default=None, help="Use the cache directory of this user", choices=["yohai"])
+    parser.add_argument("--cache_dir", type=str, default=None, help="Cache directory for loading datasets")
     
     # Model arguments
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
@@ -43,7 +51,12 @@ def parse_args() -> Args:
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--log_dir", type=str, default="./logs", help="Directory to save logs")
 
-    return parser.parse_args()
+    parsed_args = parser.parse_args()
+
+    if parsed_args.cache_dir is None and parsed_args.cache_user is not None:
+        parsed_args.cache_dir = __KNOWN_CACHE_DIRS.get(parsed_args.cache_user, None)
+
+    return parsed_args
 
 def get_args():
     global args

@@ -1,11 +1,11 @@
 import torch
 
 from transformers import TrainingArguments, Trainer, logging
-from model import model, tokenizer, data_collator
+from models.classification_model import model, tokenizer, data_collator
 from lora import attach_lora
 from evaluation import compute_metrics
-from dataset import train_dataset, eval_dataset
-from list_dataset import ListDataset
+from text_datasets import train_dataset, eval_dataset
+from data.list_dataset import ListDataset
 
 learning_rate = 1e-3
 batch_size = 4

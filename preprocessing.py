@@ -1,10 +1,10 @@
 import torch
 from tqdm import tqdm
 
-from artificial_llm_text_dataset import ArtificialLlmTextDataset
-from csv_dataset import save_dataset_to_csv
-from dataset import train_dataset, eval_dataset
-from list_dataset import ListDataset
+from data.artificial_llm_text_dataset import ArtificialLlmTextDataset
+from data.utils.dataset_csv_utils import save_dataset_to_csv
+from text_datasets import train_dataset, eval_dataset
+from data.list_dataset import ListDataset
 
 def preprocess():
     llm_train_dataset = ArtificialLlmTextDataset(train_dataset)

@@ -10,7 +10,7 @@
       "request": "launch",
       "program": "main.py",
       "console": "integratedTerminal",
-      "args": ["--cache_user", "yohai"]
+      "args": ["--cache_user", "yohai", "--task", "preprocess"]
     },
     {
       "name": "Debug Main: Preprocess",
