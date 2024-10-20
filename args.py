@@ -21,8 +21,8 @@ def parse_args() -> Args:
     parser.add_argument("--task",
         type=str, 
         required=True,
-        help="Task to perform: train, test, predict or preprocess", 
-        choices=["train", "test", "predict", "preprocess"]
+        help="Task to perform: train, test, predict, preprocess or persist_to_csv", 
+        choices=["train", "test", "predict", "preprocess", "persist_to_csv"]
     )
     
     # Data arguments

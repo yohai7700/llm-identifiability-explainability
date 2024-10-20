@@ -5,19 +5,28 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Main B: Slurm Yohai",
+      "name": "Debug Main: Slurm Yohai",
       "type": "debugpy",
       "request": "launch",
-      "program": "main_b.py",
+      "program": "main.py",
       "console": "integratedTerminal",
       "args": ["--cache_user", "yohai"]
     },
-        {
-      "name": "Debug Main B",
+    {
+      "name": "Debug Main: Preprocess",
       "type": "debugpy",
       "request": "launch",
-      "program": "main_b.py",
-      "console": "integratedTerminal"
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "preprocess"]
+    },
+    {
+      "name": "Debug Main: Persist to CSV",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "persist_to_csv"]
     }
   ]
 }
