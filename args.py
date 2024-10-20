@@ -10,15 +10,25 @@ class Args:
     optimizer: str
     seed: int
     log_dir: str
+    task: str
 
 args: Args = None
 
 def parse_args() -> Args:
-    parser = argparse.ArgumentParser(description="PaceMaker Prediction - Arguments")
+    parser = argparse.ArgumentParser(description="LLM Detection - Arguments")
+
+    # Task Arguments
+    parser.add_argument("--task",
+        type=str, 
+        required=True,
+        help="Task to perform: train, test, predict or preprocess", 
+        choices=["train", "test", "predict", "preprocess"]
+    )
     
     # Data arguments
     parser.add_argument("--data_path", type=str, default="./data", help="Path to the dataset")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size for training")
+    parser.add_argument("--cache_user", type=str, default=None, help="Use the cache directory of this user")
     
     # Model arguments
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
