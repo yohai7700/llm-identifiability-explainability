@@ -14,13 +14,13 @@ print(f'Cache User: {get_args().cache_user}')
 print_args()
 
 if get_args().task == 'preprocess':
-    from preprocessing import preprocess
+    from data.utils.preprocessing import preprocess
     preprocess()
 elif get_args().task == 'persist_to_csv':
-    from preprocessing import persist_to_csv
+    from data.utils.preprocessing import persist_to_csv
     persist_to_csv()
 elif get_args().task == 'train':
-    from training import trainer
+    from training.trainer import trainer
     trainer.train()
 elif get_args().task == 'test':
     from transformers import pipeline
