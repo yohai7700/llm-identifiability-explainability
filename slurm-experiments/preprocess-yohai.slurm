@@ -13,4 +13,4 @@
 #SBATCH --gpus=8 # GPUs in total
 
 
-python main.py --task=preprocess
+python main.py --task=preprocess --cache_user=yohai
