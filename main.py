@@ -13,6 +13,9 @@ print(f'Cache User: {get_args().cache_user}')
 
 print_args()
 
+if get_args().cache_dir is not None:
+    torch.hub.set_dir(get_args().cache_dir)
+
 if get_args().task == 'preprocess':
     from data.utils.preprocessing import preprocess
     preprocess()

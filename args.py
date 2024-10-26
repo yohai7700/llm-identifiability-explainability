@@ -16,7 +16,7 @@ class Args:
 
 
 __KNOWN_CACHE_DIRS = {
-    "yohai": "/home/sharifm/teaching/tml-0368-4075/2024-spring/students/yohaimazuz/.cache"
+    "yohai": "/home/sharifm/teaching/tml-0368-4075/2024-spring/students/yohaimazuz/.cache/torch/hub"
 }
 
 args: Args = None
