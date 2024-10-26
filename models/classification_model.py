@@ -1,5 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, DataCollatorWithPadding
 
+from args import get_args
+
 model_name = 'distilbert-base-uncased'
 
 id2label = {0: 'Negative', 1: 'Positive'}
@@ -9,9 +11,10 @@ model = AutoModelForSequenceClassification.from_pretrained(
     model_name, 
     num_labels=2, 
     id2label=id2label, 
-    label2id=label2id
+    label2id=label2id,
+    cache_dir=get_args().cache_dir
 )
-tokenizer = AutoTokenizer.from_pretrained(model_name, add_prefix_space=True)
+tokenizer = AutoTokenizer.from_pretrained(model_name, add_prefix_space=True, cache_dir=get_args().cache_dir)
 
 def tokenize_function(example):
     text = example['text']
