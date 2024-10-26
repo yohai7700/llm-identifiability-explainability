@@ -67,5 +67,7 @@ def get_args():
 def print_args():
     global args
     print("Project Configuration:")
+    if args is None:
+        args = get_args()
     for arg in vars(args):
         print(f"{arg}: {getattr(args, arg)}")
