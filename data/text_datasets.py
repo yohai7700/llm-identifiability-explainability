@@ -3,8 +3,15 @@ from torch.utils.data import Subset
 
 from args import get_args
 
-imdb_dataset = load_dataset("shawhin/imdb-truncated", cache_dir=get_args().cache_dir)
-yelp_dataset = load_dataset("Yelp/yelp_review_full", cache_dir=get_args().cache_dir)
-
-train_dataset = Subset(yelp_dataset['train'], range(1000))
-eval_dataset = Subset(yelp_dataset['test'], range(200))
+def load_text_datasets():
+    dataset_type = 'yelp'
+    if dataset_type == "imdb":
+        dataset = load_dataset("shawhin/imdb-truncated", cache_dir=get_args().cache_dir)
+        train_dataset, eval_dataset = dataset['train'], dataset['validation']
+    elif dataset_type == "yelp":
+        dataset = load_dataset("Yelp/yelp_review_full", cache_dir=get_args().cache_dir)
+        train_dataset, eval_dataset = dataset['train'], dataset['test']
+        
+    train_dataset = Subset(train_dataset, range(get_args().training_subset_size))
+    eval_dataset = Subset(eval_dataset, range(get_args().eval_subset_size))
+    return train_dataset, eval_dataset

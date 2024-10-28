@@ -4,7 +4,6 @@ from transformers import TrainingArguments, Trainer, logging
 from models.classification_model import model, tokenizer, data_collator
 from models.lora import attach_lora
 from training.evaluation import compute_metrics
-from data.text_datasets import train_dataset, eval_dataset
 from data.list_dataset import ListDataset
 
 learning_rate = 1e-3

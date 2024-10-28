@@ -13,6 +13,9 @@ class Args:
     task: str
     cache_dir: str
     cache_user: str
+    llm_generating_model_name: str
+    training_subset_size: int
+    eval_subset_size: int
 
 
 __KNOWN_CACHE_DIRS = {
@@ -37,10 +40,13 @@ def parse_args() -> Args:
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size for training")
     parser.add_argument("--cache_user", type=str, default=None, help="Use the cache directory of this user", choices=["yohai"])
     parser.add_argument("--cache_dir", type=str, default=None, help="Cache directory for loading datasets")
+    parser.add_argument("--training_subset_size", type=int, default=2000, help="Size of the training subset")
+    parser.add_argument("--eval_subset_size", type=int, default=200, help="Size of the eval subset")
     
     # Model arguments
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
     parser.add_argument("--weights_folder_path", action="store_true", help="Path for storing weights")
+    parser.add_argument("--llm_generating_model_name", default="Qwen/Qwen2-0.5B-Instruct", action="store_true", help="Model name for LLM generation")
     
     # Training arguments
     parser.add_argument("--epochs", type=int, default=10, help="Number of epochs to train")

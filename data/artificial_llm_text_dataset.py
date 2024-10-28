@@ -1,6 +1,7 @@
 import torch
 
 from transformers import pipeline
+from args import get_args
 from models.classification_model import tokenize_function_artificial
 
 class ArtificialLlmTextDataset(torch.utils.data.Dataset):
@@ -9,7 +10,8 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
         super(ArtificialLlmTextDataset, self).__init__()
 
         self.original_dataset = original_dataset
-        self.pipe = pipeline("text-generation", model="Qwen/Qwen2-0.5B-Instruct", trust_remote_code=True, device_map="auto")
+        
+        self.pipe = pipeline("text-generation", model=get_args().llm_generating_model_name, trust_remote_code=True, device_map="auto")
 
     def __getitem__(self, index):
         original_text = self.original_dataset[index]['text']
