@@ -16,6 +16,7 @@ class Args:
     llm_generating_model_name: str
     training_subset_size: int
     eval_subset_size: int
+    lora_rank: int
 
 
 __KNOWN_CACHE_DIRS = {
@@ -47,6 +48,12 @@ def parse_args() -> Args:
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
     parser.add_argument("--weights_folder_path", action="store_true", help="Path for storing weights")
     parser.add_argument("--llm_generating_model_name", default="Qwen/Qwen2-0.5B-Instruct", action="store_true", help="Model name for LLM generation")
+
+    # Lora arguments
+    parser.add_argument("--lora_rank", default=8, action="store_true", help="Rank used for LoRA algorithm")
+
+    # Prediction arguments
+    parser.add_argument("--prediction_text_input", type=str, default=None, help="Text input for prediction")
     
     # Training arguments
     parser.add_argument("--epochs", type=int, default=10, help="Number of epochs to train")

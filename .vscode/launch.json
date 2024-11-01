@@ -28,13 +28,21 @@
       "console": "integratedTerminal",
       "args": ["--task", "persist_to_csv"]
     },
-        {
-      "name": "Debug Main: Debug Train",
+    {
+      "name": "Debug Main: Train (1 epoch)",
       "type": "debugpy",
       "request": "launch",
       "program": "main.py",
       "console": "integratedTerminal",
       "args": ["--task", "train", "--epochs", "1"]
+    },
+    {
+      "name": "Debug Main: Predict",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "predict"]
     }
   ]
 }

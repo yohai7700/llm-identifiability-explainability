@@ -1,9 +1,11 @@
 from peft import LoraConfig, TaskType, get_peft_model
 
+from args import get_args
+
 def attach_lora(model, tokenizer):
     lora_config = LoraConfig(
         task_type = TaskType.SEQ_CLS,
-        r = 4,
+        r = get_args().lora_rank,
         lora_alpha=32,
         lora_dropout=0.01,
         target_modules=['q_lin']

@@ -1,4 +1,5 @@
 import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 from args import print_args, get_args
 
@@ -29,6 +30,10 @@ elif get_args().task == 'persist_to_csv':
 elif get_args().task == 'train':
     from training.trainer import trainer
     trainer.train()
+    trainer.save_model('./models/checkpoints/llm_cls/distilbert_qwen/model')
+elif get_args().task == 'predict':
+    from prediction import predict
+    print(predict())
 elif get_args().task == 'test':
     from transformers import pipeline
     messages = [
