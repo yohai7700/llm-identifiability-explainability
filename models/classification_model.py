@@ -12,9 +12,10 @@ model = AutoModelForSequenceClassification.from_pretrained(
     num_labels=2, 
     id2label=id2label, 
     label2id=label2id,
-    cache_dir=get_args().cache_dir
+    cache_dir=get_args().cache_dir,
+    device_map=get_args().device
 )
-tokenizer = AutoTokenizer.from_pretrained(model_name, add_prefix_space=True, cache_dir=get_args().cache_dir)
+tokenizer = AutoTokenizer.from_pretrained(model_name, add_prefix_space=True, cache_dir=get_args().cache_dir, device_map=get_args().device)
 
 def tokenize_function(example):
     text = example['text']

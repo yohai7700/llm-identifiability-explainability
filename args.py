@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import argparse
+import torch
 
 @dataclass
 class Args:
@@ -27,6 +28,9 @@ args: Args = None
 
 def parse_args() -> Args:
     parser = argparse.ArgumentParser(description="LLM Detection - Arguments")
+
+    # Environment Arguments
+    parser.add_argument("--device", type=str, default=torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu'), help="Random seed for reproducibility")
 
     # Task Arguments
     parser.add_argument("--task",
