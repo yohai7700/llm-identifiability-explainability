@@ -27,6 +27,14 @@
       "program": "main.py",
       "console": "integratedTerminal",
       "args": ["--task", "persist_to_csv"]
+    },
+        {
+      "name": "Debug Main: Debug Train",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "train", "--epochs", "1"]
     }
   ]
 }
