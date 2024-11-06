@@ -34,14 +34,18 @@ elif get_args().task == 'train':
 elif get_args().task == 'predict':
     from prediction import predict
     print(predict())
+elif get_args().task == 'interpret':
+    from interpretation import interpret
+    interpret()
 elif get_args().task == 'test':
     from transformers import pipeline
+    message = input('Enter a message: ')
     messages = [
-        {"role": "user", "content": f"rewrite the following text:I love to play video games in the afternoon!"},
+        {"role": "user", "content": message},
     ]
     pipe = pipeline("text-generation", model="Qwen/Qwen2-0.5B-Instruct", trust_remote_code=True, device_map="auto")
     results = pipe(messages, max_length=1024)
     for result in results[0]['generated_text']:
         print(f"{result['role']}: {result['content']}")
 else:
-    print("Unsupported task currently. Please choose 'preprocess', 'test' or 'train'.")
+    print("Unsupported task currently. Please choose 'preprocess', 'test', 'interpret', or 'train'.")

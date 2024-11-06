@@ -18,6 +18,7 @@ class Args:
     training_subset_size: int
     eval_subset_size: int
     lora_rank: int
+    device: torch.device
 
 
 __KNOWN_CACHE_DIRS = {
@@ -36,8 +37,8 @@ def parse_args() -> Args:
     parser.add_argument("--task",
         type=str, 
         required=True,
-        help="Task to perform: train, test, predict, preprocess or persist_to_csv", 
-        choices=["train", "test", "predict", "preprocess", "persist_to_csv"]
+        help="Task to perform: train, test, predict, preprocess, interpret or persist_to_csv", 
+        choices=["train", "test", "predict", "preprocess", "persist_to_csv", "interpret"]
     )
     
     # Data arguments
