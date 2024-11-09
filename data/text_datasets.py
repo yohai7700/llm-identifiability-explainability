@@ -1,5 +1,7 @@
-from datasets import load_dataset
+import torch
 from torch.utils.data import Subset
+
+from datasets import load_dataset
 
 from args import get_args
 
@@ -11,7 +13,10 @@ def load_text_datasets():
     elif dataset_type == "yelp":
         dataset = load_dataset("Yelp/yelp_review_full", cache_dir=get_args().cache_dir)
         train_dataset, eval_dataset = dataset['train'], dataset['test']
-        
-    train_dataset = Subset(train_dataset, range(get_args().training_subset_size))
-    eval_dataset = Subset(eval_dataset, range(get_args().eval_subset_size))
+    
+    training_indices = torch.randperm(len(train_dataset)).tolist()[:get_args().training_subset_size]
+    eval_indices = torch.randperm(len(eval_dataset)).tolist()[:get_args().eval_subset_size]
+    
+    train_dataset = Subset(train_dataset, training_indices)
+    eval_dataset = Subset(eval_dataset, eval_indices)
     return train_dataset, eval_dataset
