@@ -4,7 +4,7 @@ from torch.utils.data import Subset
 from args import get_args
 
 def load_text_datasets():
-    dataset_type = 'yelp'
+    dataset_type = get_args().source_dataset_type
     if dataset_type == "imdb":
         dataset = load_dataset("shawhin/imdb-truncated", cache_dir=get_args().cache_dir)
         train_dataset, eval_dataset = dataset['train'], dataset['validation']

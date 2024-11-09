@@ -35,13 +35,7 @@ elif get_args().task == 'predict':
     from prediction import predict
     print(predict())
 elif get_args().task == 'test':
-    from transformers import pipeline
-    messages = [
-        {"role": "user", "content": f"rewrite the following text:I love to play video games in the afternoon!"},
-    ]
-    pipe = pipeline("text-generation", model="Qwen/Qwen2-0.5B-Instruct", trust_remote_code=True, device_map="auto")
-    results = pipe(messages, max_length=1024)
-    for result in results[0]['generated_text']:
-        print(f"{result['role']}: {result['content']}")
+    from testing import test
+    test()
 else:
     print("Unsupported task currently. Please choose 'preprocess', 'test' or 'train'.")
