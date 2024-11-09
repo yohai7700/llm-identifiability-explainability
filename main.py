@@ -1,5 +1,4 @@
 import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 from args import print_args, get_args
 
@@ -34,8 +33,11 @@ elif get_args().task == 'train':
 elif get_args().task == 'predict':
     from prediction import predict
     print(predict())
+elif get_args().task == 'evaluate':
+    from training.evaluation import eval
+    eval()
 elif get_args().task == 'test':
     from testing import test
     test()
 else:
-    print("Unsupported task currently. Please choose 'preprocess', 'test' or 'train'.")
+    print(f"Unsupported task: {get_args().task}")

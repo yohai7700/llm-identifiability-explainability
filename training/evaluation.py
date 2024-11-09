@@ -1,16 +1,20 @@
-import evaluate
-import numpy as np
+import torch
+from transformers import AutoModelForSequenceClassification, Trainer
 
-accuracy_metric = evaluate.load("accuracy")
-f1_metric = evaluate.load("f1")
-confusion_matrix_metric = evaluate.load("confusion_matrix")
+from data.list_dataset import ListDataset
+from training.evaluation_metrics import compute_metrics
+from models.classification_model import data_collator
 
-def compute_metrics(examples):
-    predictions, labels = examples
-    predictions = np.argmax(predictions, axis=1)
 
-    accuracy = accuracy_metric.compute(predictions=predictions, references=labels)
-    f1_score = f1_metric.compute(predictions=predictions, references=labels)
-    confusion_matrix = confusion_matrix_metric.compute(predictions=predictions, references=labels)
-    confusion_matrix['confusion_matrix'] = confusion_matrix['confusion_matrix'].tolist()
-    return { 'accuracy': accuracy, 'f1_score': f1_score, 'confusion_matrix': confusion_matrix }
+def eval():
+    model = AutoModelForSequenceClassification.from_pretrained('./models/checkpoints/llm_cls/distilbert_qwen/model',device_map='cuda')
+
+    eval_dataset = ListDataset(torch.load('./data/checkpoints/yelp/eval_dataset.pt', weights_only=True))
+    trainer = Trainer(
+        model=model, 
+        eval_dataset=eval_dataset,
+        data_collator=data_collator,
+        compute_metrics=compute_metrics
+    )
+    evaluation = trainer.evaluate()
+    print(evaluation)
