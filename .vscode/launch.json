@@ -43,6 +43,14 @@
       "program": "main.py",
       "console": "integratedTerminal",
       "args": ["--task", "predict"]
+    },
+        {
+      "name": "Debug Main: Evaluate",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "evaluate"]
     }
   ]
 }
