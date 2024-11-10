@@ -18,6 +18,7 @@ class Args:
     training_subset_size: int
     eval_subset_size: int
     lora_rank: int
+    device: torch.device
     source_dataset_type: str
 
 
@@ -37,8 +38,8 @@ def parse_args() -> Args:
     parser.add_argument("--task",
         type=str, 
         required=True,
-        help="Task to perform: train, test, predict, preprocess, evaluate or persist_to_csv", 
-        choices=["train", "test", "predict", "preprocess", "persist_to_csv", "evaluate"]
+        help="Task to perform: train, test, predict, preprocess, evaluate, interpret or persist_to_csv",
+        choices=["train", "test", "predict", "preprocess", "persist_to_csv", "evaluate", "interpret"]
     )
     
     # Data arguments

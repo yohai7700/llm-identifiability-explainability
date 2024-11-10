@@ -33,6 +33,9 @@ elif get_args().task == 'train':
 elif get_args().task == 'predict':
     from prediction import predict
     print(predict())
+elif get_args().task == 'interpret':
+    from interpretation import interpret
+    interpret()
 elif get_args().task == 'evaluate':
     from training.evaluation import eval
     eval()
