@@ -1,24 +1,32 @@
 
-from data.text_datasets import load_text_datasets
+import torch
+import os
+
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from transformers_interpret import SequenceClassificationExplainer
 
+from data.list_dataset import ListDataset
 
-# lig = LayerIntegratedGradients(model, model.embedding)
+
 
 def interpret():
+    os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
+    index = 100
     model = AutoModelForSequenceClassification.from_pretrained('./models/checkpoints/llm_cls/distilbert_qwen/model',device_map='cuda')
     tokenizer = AutoTokenizer.from_pretrained('./models/checkpoints/llm_cls/distilbert_qwen/model', device_map='cuda')    
-    train_dataset, _ = load_text_datasets()
-    text = train_dataset[0]['text']
+    eval_dataset = ListDataset(torch.load('./data/checkpoints/yelp/eval_dataset.pt', weights_only=True))
+    text = eval_dataset[index]['text']
     cls_explainer = SequenceClassificationExplainer(
         model,
-        tokenizer)
+        tokenizer,
+        custom_labels=["Human-Authentic", "LLM-Generated"])
     word_attributions = cls_explainer(text)
     print(word_attributions)
-    cls_explainer.visualize('vis.html')
+    cls_explainer.visualize(f'./interpreter_visualizations/vis-{index}.html')
 
 # vis_data_records_ig = []
+
+# lig = LayerIntegratedGradients(model, model.embedding)
 
 # def interpret_sentence(sentence, label = 0):
 #     token_reference = TokenReferenceBase(model.pad_token_id)

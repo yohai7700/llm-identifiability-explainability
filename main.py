@@ -1,5 +1,4 @@
 import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 from args import print_args, get_args
 
