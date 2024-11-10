@@ -19,6 +19,7 @@ class Args:
     eval_subset_size: int
     lora_rank: int
     device: torch.device
+    source_dataset_type: str
 
 
 __KNOWN_CACHE_DIRS = {
@@ -37,8 +38,8 @@ def parse_args() -> Args:
     parser.add_argument("--task",
         type=str, 
         required=True,
-        help="Task to perform: train, test, predict, preprocess, interpret or persist_to_csv", 
-        choices=["train", "test", "predict", "preprocess", "persist_to_csv", "interpret"]
+        help="Task to perform: train, test, predict, preprocess, evaluate, interpret or persist_to_csv",
+        choices=["train", "test", "predict", "preprocess", "persist_to_csv", "evaluate", "interpret"]
     )
     
     # Data arguments
@@ -48,6 +49,7 @@ def parse_args() -> Args:
     parser.add_argument("--cache_dir", type=str, default=None, help="Cache directory for loading datasets")
     parser.add_argument("--training_subset_size", type=int, default=2000, help="Size of the training subset")
     parser.add_argument("--eval_subset_size", type=int, default=200, help="Size of the eval subset")
+    parser.add_argument("--source_dataset_type", type=str, default="yelp", help="Source dataset type", choices=["yelp", "imdb", "amazon_polarity", "ibm_argument_quality"])
     
     # Model arguments
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
