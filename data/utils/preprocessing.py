@@ -1,3 +1,4 @@
+from typing import Literal
 import torch
 import os
 from tqdm import tqdm
@@ -7,6 +8,8 @@ from data.artificial_llm_text_dataset import ArtificialLlmTextDataset
 from data.utils.dataset_csv_utils import save_dataset_to_csv
 from data.text_datasets import load_text_datasets
 from data.list_dataset import ListDataset
+
+DatasetPurpose = Literal['train', 'eval']
 
 def get_model_alias(model_name: str):
     if model_name == "Qwen/Qwen2-0.5B-Instruct":
@@ -23,9 +26,13 @@ def get_preprocessed_dataset_folder_path():
     model = get_model_alias(get_args().llm_generating_model_name)
     return f'./data/checkpoints/{dataset_type}_{model}'
 
-def get_preprocessed_dataset_path(label: str):
+def get_preprocessed_dataset_path(purpose: DatasetPurpose):
     folder_path = get_preprocessed_dataset_folder_path()
-    return f'{folder_path}/{label}_dataset.pt'
+    return f'{folder_path}/{purpose}_dataset.pt'
+
+def iterate_data(dataset):
+    for i in tqdm(range(len(dataset))):
+        yield dataset[i]
 
 def preprocess():
     folder_path = get_preprocessed_dataset_folder_path()

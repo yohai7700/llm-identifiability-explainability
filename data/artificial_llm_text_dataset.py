@@ -1,5 +1,4 @@
 import torch
-from tensorpack.libinfo import answer
 
 from transformers import pipeline
 from args import get_args
@@ -32,7 +31,7 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
                 answer = self.answer(question)
                 label = 1
 
-            tokenized_properties = tokenize_function_artificial({'text': answer})
+            tokenized_properties = tokenize_function_artificial({'text': answer })
 
         else:
             if index % 2 == 0:
