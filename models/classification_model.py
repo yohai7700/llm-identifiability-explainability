@@ -3,6 +3,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Data
 from args import get_args
 
 model_name = 'distilbert-base-uncased'
+model_name = 'bert-base-uncased'
 
 id2label = {0: 'Negative', 1: 'Positive'}
 label2id = {v: k for k, v in id2label.items()}
@@ -54,4 +55,13 @@ if tokenizer.pad_token is None:
     tokenizer.add_special_tokens({'pad_token': '[PAD]'})
     model.resize_token_embeddings(len(tokenizer))
 
-data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
+# Custom DataCollator to remove token_type_ids
+class CustomDataCollator(DataCollatorWithPadding):
+    def __call__(self, features):
+        # Remove token_type_ids if they're causing issues
+        for feature in features:
+            if "token_type_ids" in feature:
+                del feature["token_type_ids"]
+        return super().__call__(features)
+
+data_collator = CustomDataCollator(tokenizer=tokenizer)
