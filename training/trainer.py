@@ -22,8 +22,8 @@ training_args = TrainingArguments(
     load_best_model_at_end=True,
 )
 
-train_dataset = ListDataset(torch.load('./data/checkpoints/yelp/train_dataset.pt', weights_only=True))
-eval_dataset = ListDataset(torch.load('./data/checkpoints/yelp/eval_dataset.pt', weights_only=True))
+train_dataset = ListDataset(torch.load( f'./data/checkpoints/{get_args().training_dataset_type}/train_dataset.pt', weights_only=True))
+eval_dataset = ListDataset(torch.load(f'./data/checkpoints/{get_args().training_dataset_type}/eval_dataset.pt', weights_only=True))
 
 lora_model = attach_lora(model, tokenizer)
 trainer = Trainer(
