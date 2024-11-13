@@ -42,8 +42,8 @@ def parse_args() -> Args:
     parser.add_argument("--task",
         type=str, 
         required=True,
-        help="Task to perform: train, test, predict, preprocess, evaluate, interpret or persist_to_csv",
-        choices=["train", "test", "predict", "preprocess", "persist_to_csv", "evaluate", "interpret"]
+        help="Task to perform: train, test, predict, preprocess or persist_to_csv", 
+        choices=["train", "test", "predict", "preprocess", "persist_to_csv"]
     )
     
     # Data arguments
@@ -76,7 +76,7 @@ def parse_args() -> Args:
     # Miscellaneous
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--log_dir", type=str, default="./logs", help="Directory to save logs")
-
+    parser.add_argument("--dataset_name", type=str, default="squad", help="dataset_name")
     parsed_args = parser.parse_args()
 
     if parsed_args.cache_dir is None and parsed_args.cache_user is not None:

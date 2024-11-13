@@ -33,7 +33,9 @@ def preprocess():
     os.makedirs(folder_path, exist_ok=True)
     train_dataset, eval_dataset = load_text_datasets(dataset_type)
     for label, dataset in [('train', train_dataset), ('eval', eval_dataset)]:
-        llm_dataset = ArtificialLlmTextDataset(dataset)
+        # if label == 'train':
+        #     continue
+        llm_dataset = ArtificialLlmTextDataset(dataset, dataset_type)
 
         print(f"Preprocessing {label} dataset...")
         data_items = [llm_dataset[i] for i in tqdm(range(len(llm_dataset)))]

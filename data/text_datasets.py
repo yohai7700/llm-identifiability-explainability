@@ -10,10 +10,13 @@ def load_text_datasets(dataset_type = get_args().source_dataset_type):
     elif dataset_type == "yelp":
         dataset = load_dataset("Yelp/yelp_review_full", cache_dir=get_args().cache_dir)
         train_dataset, eval_dataset = dataset['train'], dataset['test']
-    elif dataset_type == "amazon_polarity":
+    elif  dataset_type == 'amazon_polarity':
         dataset = load_dataset("amazon_polarity", cache_dir=get_args().cache_dir)
         train_dataset, eval_dataset = dataset['train'], dataset['test']
-        
+    elif dataset_type == 'squad':
+        dataset = load_dataset("squad", cache_dir=get_args().cache_dir)
+        train_dataset, eval_dataset = dataset['train'], dataset['validation']
+
     train_dataset = Subset(train_dataset, range(get_args().training_subset_size))
     eval_dataset = Subset(eval_dataset, range(get_args().eval_subset_size))
     return train_dataset, eval_dataset
