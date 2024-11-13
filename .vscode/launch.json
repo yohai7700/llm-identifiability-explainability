@@ -18,7 +18,7 @@
       "request": "launch",
       "program": "main.py",
       "console": "integratedTerminal",
-      "args": ["--task", "preprocess", "--training_subset_size", "5", "--eval_subset_size", "1", "--source_dataset_type", "amazon_polarity"]
+      "args": ["--task", "preprocess"]
     },
     {
       "name": "Debug Main: Persist to CSV",
