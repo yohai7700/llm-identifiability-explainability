@@ -18,8 +18,6 @@ class Args:
     training_subset_size: int
     eval_subset_size: int
     lora_rank: int
-    device: torch.device
-    source_dataset_type: str
 
 
 __KNOWN_CACHE_DIRS = {
@@ -38,8 +36,8 @@ def parse_args() -> Args:
     parser.add_argument("--task",
         type=str, 
         required=True,
-        help="Task to perform: train, test, predict, preprocess, evaluate, interpret or persist_to_csv",
-        choices=["train", "test", "predict", "preprocess", "persist_to_csv", "evaluate", "interpret"]
+        help="Task to perform: train, test, predict, preprocess or persist_to_csv", 
+        choices=["train", "test", "predict", "preprocess", "persist_to_csv"]
     )
     
     # Data arguments
@@ -48,13 +46,12 @@ def parse_args() -> Args:
     parser.add_argument("--cache_user", type=str, default=None, help="Use the cache directory of this user", choices=["yohai"])
     parser.add_argument("--cache_dir", type=str, default=None, help="Cache directory for loading datasets")
     parser.add_argument("--training_subset_size", type=int, default=2000, help="Size of the training subset")
-    parser.add_argument("--eval_subset_size", type=int, default=200, help="Size of the eval subset")
-    parser.add_argument("--source_dataset_type", type=str, default="yelp", help="Source dataset type", choices=["yelp", "imdb", "amazon_polarity", "ibm_argument_quality"])
+    parser.add_argument("--eval_subset_size", type=int, default=1000, help="Size of the eval subset")
     
     # Model arguments
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
     parser.add_argument("--weights_folder_path", action="store_true", help="Path for storing weights")
-    parser.add_argument("--llm_generating_model_name", default="Qwen/Qwen2-0.5B-Instruct", action="store_true", help="Model name for LLM generation")
+    parser.add_argument("--llm_generating_model_name", default="Qwen/Qwen2.5-0.5B-Instruct", action="store_true", help="Model name for LLM generation")
 
     # Lora arguments
     parser.add_argument("--lora_rank", default=8, action="store_true", help="Rank used for LoRA algorithm")
@@ -70,7 +67,7 @@ def parse_args() -> Args:
     # Miscellaneous
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--log_dir", type=str, default="./logs", help="Directory to save logs")
-
+    parser.add_argument("--dataset_name", type=str, default="squad", help="dataset_name")
     parsed_args = parser.parse_args()
 
     if parsed_args.cache_dir is None and parsed_args.cache_user is not None:
