@@ -3,7 +3,8 @@ from peft import LoraConfig, TaskType, get_peft_model
 from args import get_args
 
 def get_target_modules():
-    if False:
+    model_name = get_args().classification_model_name
+    if model_name == 'bert-base-uncased':
         return ['query']
     return ['q_lin']
 

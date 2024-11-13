@@ -1,5 +1,4 @@
 import torch
-from tensorpack.libinfo import answer
 
 from transformers import pipeline
 from args import get_args
@@ -32,7 +31,7 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
                 answer = self.answer(question)
                 label = 1
 
-            tokenized_properties = tokenize_function_artificial({'text': answer})
+            tokenized_properties = tokenize_function_artificial({'text': answer })
 
         else:
             if index % 2 == 0:
@@ -54,7 +53,18 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
 
         return result
     
-    def rewrite(self, text):
+    def get_text_key(self):
+        if get_args().source_dataset_type == "amazon_polarity":
+            return "content"
+        
+        return "text"
+    
+    def rewrite(self, text: str):
+        if not text.startswith('"'):
+            text = f'"{text}'
+        if not text.endswith('"'):
+            text = f'{text}"'
+
         messages = [
             {"role": "user", "content": f"rewrite the following text: {text}"},
         ]

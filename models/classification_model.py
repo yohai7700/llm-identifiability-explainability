@@ -2,8 +2,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Data
 
 from args import get_args
 
-model_name = 'distilbert-base-uncased'
-model_name = 'bert-base-uncased'
+model_name = get_args().classification_model_name
 
 id2label = {0: 'Negative', 1: 'Positive'}
 label2id = {v: k for k, v in id2label.items()}
