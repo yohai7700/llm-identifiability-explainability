@@ -29,7 +29,7 @@ elif get_args().task == 'persist_to_csv':
 elif get_args().task == 'train':
     from training.trainer import trainer
     trainer.train()
-    folder_path = f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}"
+    folder_path = f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}_{get_args().llm_generating_model_name}"
     trainer.save_model(f'{folder_path}/model')
 elif get_args().task == 'predict':
     from prediction import predict

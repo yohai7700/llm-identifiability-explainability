@@ -13,7 +13,7 @@ learning_rate = 1e-3
 batch_size = 8
 
 def get_classification_model_folder():
-    return f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}"
+    return f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}_{get_args().llm_generating_model_name}"
 
 training_args = TrainingArguments(
     output_dir=get_classification_model_folder(),
