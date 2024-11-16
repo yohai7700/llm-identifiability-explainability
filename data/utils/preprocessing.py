@@ -21,13 +21,15 @@ def get_model_alias(model_name: str):
     
     raise ValueError(f"Model '{model_name}' is not supported")
 
-def get_preprocessed_dataset_folder_path():
-    dataset_type = get_args().source_dataset_type
+def get_preprocessed_dataset_folder_path(dataset_type = get_args().source_dataset_type):
     model = get_model_alias(get_args().llm_generating_model_name)
     return f'./data/checkpoints/{dataset_type}_{model}'
 
 def get_preprocessed_dataset_path(purpose: DatasetPurpose):
-    folder_path = get_preprocessed_dataset_folder_path()
+    if get_args().eval_dataset_type is not None:
+        folder_path = get_preprocessed_dataset_folder_path(get_args().eval_dataset_type)
+    else:
+        folder_path = get_preprocessed_dataset_folder_path()
     return f'{folder_path}/{purpose}_dataset.pt'
 
 def iterate_data(dataset):

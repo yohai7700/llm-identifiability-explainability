@@ -35,8 +35,8 @@ elif get_args().task == 'predict':
     from prediction import predict
     print(predict())
 elif get_args().task == 'interpret':
-    from interpretation import interpret
-    interpret()
+    from interpretation import interpret, interpret_experiment, interpret_count_candidates
+    interpret_count_candidates()
 elif get_args().task == 'evaluate':
     from training.evaluation import eval
     eval()

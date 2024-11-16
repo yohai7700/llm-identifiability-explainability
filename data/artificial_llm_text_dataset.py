@@ -60,10 +60,10 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
         return "text"
     
     def rewrite(self, text: str):
-        if not text.startswith('"'):
-            text = f'"{text}'
-        if not text.endswith('"'):
-            text = f'{text}"'
+        # if not text.startswith('"'):
+        #     text = f'"{text}'
+        # if not text.endswith('"'):
+        #     text = f'{text}"'
 
         messages = [
             {"role": "user", "content": f"rewrite the following text: {text}"},
