@@ -4,7 +4,7 @@ from transformers import TrainingArguments, Trainer, logging, DataCollatorWithPa
 from args import get_args
 from models.classification_model import model, tokenizer, data_collator
 from models.lora import attach_lora
-from training.evaluation import compute_metrics
+from training.evaluation_metrics import compute_metrics
 
 from data.list_dataset import ListDataset
 from data.utils.preprocessing import get_preprocessed_dataset_path
@@ -12,9 +12,11 @@ from data.utils.preprocessing import get_preprocessed_dataset_path
 learning_rate = 1e-3
 batch_size = 8
 
-output_dir = f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}"
+def get_classification_model_folder():
+    return f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}"
+
 training_args = TrainingArguments(
-    output_dir=output_dir,
+    output_dir=get_classification_model_folder(),
     learning_rate=learning_rate,
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,

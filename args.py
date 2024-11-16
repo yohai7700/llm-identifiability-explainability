@@ -23,6 +23,7 @@ class Args:
     source_dataset_type: str
     training_dataset_type: str
     eval_dataset_type: str
+    index: int
 
 
 __KNOWN_CACHE_DIRS = {
@@ -34,7 +35,7 @@ args: Args = None
 def parse_args() -> Args:
     parser = argparse.ArgumentParser(description="LLM Detection - Arguments")
 
-    dataset_types = ["yelp", "imdb", "amazon_polarity"]
+    dataset_types = ["yelp", "imdb", "amazon_polarity", "squad", "natural_questions_clean"]
 
     # Environment Arguments
     parser.add_argument("--device", type=str, default=torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu'), help="Random seed for reproducibility")
@@ -73,7 +74,10 @@ def parse_args() -> Args:
     parser.add_argument("--lr", type=float, default=0.001, help="Learning rate")
     parser.add_argument("--optimizer", type=str, default="adam", help="Optimizer to use")
     parser.add_argument("--training_dataset_type", type=str, default="yelp", help="Training dataset type", choices=dataset_types)
-    parser.add_argument("--eval_dataset_type", type=str, default="yelp", help="Eval dataset type", choices=dataset_types)
+    parser.add_argument("--eval_dataset_type", type=str, help="Eval dataset type", choices=dataset_types)
+
+    # Interpretation arguments
+    parser.add_argument("--index", type=int, help="The index of the text to interpret")
     
     # Miscellaneous
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
