@@ -7,13 +7,13 @@ from models.lora import attach_lora
 from training.evaluation_metrics import compute_metrics
 
 from data.list_dataset import ListDataset
-from data.utils.preprocessing import get_preprocessed_dataset_path
+from data.utils.preprocessing import get_preprocessed_dataset_path, get_model_alias
 
 learning_rate = 1e-3
 batch_size = 8
 
-def get_classification_model_folder():
-    return f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}"
+def get_classification_model_folder(training_llm = get_args().llm_generating_model_name):
+    return f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}_{get_model_alias(training_llm)}"
 
 training_args = TrainingArguments(
     output_dir=get_classification_model_folder(),

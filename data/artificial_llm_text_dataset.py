@@ -6,7 +6,7 @@ from models.classification_model import tokenize_function_artificial
 
 class ArtificialLlmTextDataset(torch.utils.data.Dataset):
     """Some Information about ArtificialLlmTextDataset"""
-    def __init__(self, original_dataset: torch.utils.data.Dataset, dataset_name=''):
+    def __init__(self, original_dataset: torch.utils.data.Dataset, dataset_name: str):
         super(ArtificialLlmTextDataset, self).__init__()
 
         self.original_dataset = original_dataset
@@ -22,8 +22,13 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
         elif self.dataset_name == 'squad':
             question = self.original_dataset[index]['question']
             original_answer = self.original_dataset[index]['context']
+        elif self.dataset_name == 'natural_questions_clean':
+            question = self.original_dataset[index]['question']
+            original_answer = self.original_dataset[index]['long_answers'][0]
 
-        if self.dataset_name == 'squad':
+        is_qa = self.dataset_name == 'squad' or self.dataset_name == 'natural_questions_clean'
+
+        if self.dataset_name == 'squad' or self.dataset_name == 'natural_questions_clean':
             if index % 2 == 0:
                 answer = original_answer
                 label = 0
@@ -32,7 +37,6 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
                 label = 1
 
             tokenized_properties = tokenize_function_artificial({'text': answer })
-
         else:
             if index % 2 == 0:
                 text = original_text
@@ -42,9 +46,9 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
                 label = 1
 
             tokenized_properties = tokenize_function_artificial({ 'text': text })
-        if self.dataset_name == 'squad':
+        if is_qa:
             result = {'question': question,
-                      "answer": answer,
+                      "text": answer,
                       'label': label,
                       'pre_llm_text': original_answer}
         else:
@@ -74,7 +78,7 @@ class ArtificialLlmTextDataset(torch.utils.data.Dataset):
 
     def answer(self, text):
         messages = [
-            {"role": "user", "content": f"answer this question: {text}"},
+            {"role": "user", "content": f"Answer this question in detail, don't refuse to answer: {text}"},
         ]
         result = self.pipe(messages, max_length=2000)
         rewritten_text = result[0]['generated_text'][1]['content']

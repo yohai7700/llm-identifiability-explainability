@@ -18,7 +18,16 @@
       "request": "launch",
       "program": "main.py",
       "console": "integratedTerminal",
-      "args": ["--task", "preprocess"]
+      "args": [
+        "--task",
+        "preprocess",
+        "--eval_subset_size",
+        "5",
+        "--training_subset_size",
+        "5",
+        "--source_dataset_type",
+        "natural_questions_clean"
+      ]
     },
     {
       "name": "Debug Main: Persist to CSV",
@@ -52,7 +61,7 @@
       "console": "integratedTerminal",
       "args": ["--task", "evaluate"]
     },
-        {
+    {
       "name": "Debug Main: Interpret",
       "type": "debugpy",
       "request": "launch",

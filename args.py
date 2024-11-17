@@ -16,6 +16,7 @@ class Args:
     cache_user: str
     classification_model_name: str
     llm_generating_model_name: str
+    training_llm_generating_model_name: str
     training_subset_size: int
     eval_subset_size: int
     lora_rank: int
@@ -61,7 +62,8 @@ def parse_args() -> Args:
     parser.add_argument("--pretrained", action="store_true", help="Use pretrained weights")
     parser.add_argument("--weights_folder_path", action="store_true", help="Path for storing weights")
     parser.add_argument("--llm_generating_model_name", type=str, default="Qwen/Qwen2-0.5B-Instruct", help="Model name for LLM generation")
-    parser.add_argument("--classification_model_name", type=str, default="distilbert-base-uncased", help="Model name for LLM generation")
+    parser.add_argument("--training_llm_generating_model_name", type=str, default="Qwen/Qwen2-0.5B-Instruct", help="Model name for Training LLM generation")
+    parser.add_argument("--classification_model_name", type=str, default="distilbert-base-uncased", help="Model name for classification")
 
     # Lora arguments
     parser.add_argument("--lora_rank", default=8, action="store_true", help="Rank used for LoRA algorithm")

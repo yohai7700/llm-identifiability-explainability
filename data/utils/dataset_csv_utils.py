@@ -8,7 +8,7 @@ def save_dataset_to_csv(dataset, file_path):
     keys.append('index')
     
     # Open CSV file for writing
-    with open(file_path, 'w', newline='') as csvfile:
+    with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=keys)
         
         # Write the header (column names)

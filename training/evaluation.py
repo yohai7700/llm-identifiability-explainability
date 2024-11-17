@@ -6,10 +6,11 @@ from training.evaluation_metrics import compute_metrics
 from models.classification_model import data_collator
 from training.trainer import get_classification_model_folder
 from data.utils.preprocessing import get_preprocessed_dataset_path
+from args import get_args
 
 
 def eval():
-    model_folder = get_classification_model_folder()
+    model_folder = get_classification_model_folder(get_args().training_llm_generating_model_name)
     model = AutoModelForSequenceClassification.from_pretrained(f'{model_folder}/model',device_map='cuda')
 
     eval_dataset_path = get_preprocessed_dataset_path('eval')
