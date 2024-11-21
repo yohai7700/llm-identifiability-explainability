@@ -6,7 +6,7 @@ def get_target_modules():
     model_name = get_args().classification_model_name
     if model_name == 'bert-base-uncased':
         return ['query']
-    return ['q_lin']
+    return ['q_lin', "k_lin", "v_lin"]
 
 def attach_lora(model, tokenizer):
     lora_config = LoraConfig(

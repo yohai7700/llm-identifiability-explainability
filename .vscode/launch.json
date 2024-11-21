@@ -45,6 +45,14 @@
       "console": "integratedTerminal",
       "args": ["--task", "train", "--epochs", "1"]
     },
+        {
+      "name": "Debug Main: Train (10 epoch)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "train", "--epochs", "10", "--source_dataset_type", "natural_questions_clean"]
+    },
     {
       "name": "Debug Main: Predict",
       "type": "debugpy",

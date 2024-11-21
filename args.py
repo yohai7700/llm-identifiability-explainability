@@ -25,6 +25,7 @@ class Args:
     training_dataset_type: str
     eval_dataset_type: str
     index: int
+    is_baseline: bool
 
 
 __KNOWN_CACHE_DIRS = {
@@ -80,6 +81,9 @@ def parse_args() -> Args:
 
     # Interpretation arguments
     parser.add_argument("--index", type=int, help="The index of the text to interpret")
+
+    # Interpretation arguments
+    parser.add_argument("--is_baseline", type=bool, default=False, help="Whether to evaluate the baseline performance")
     
     # Miscellaneous
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
