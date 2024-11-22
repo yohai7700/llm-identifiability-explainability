@@ -27,10 +27,9 @@ elif get_args().task == 'persist_to_csv':
     from data.utils.preprocessing import persist_to_csv
     persist_to_csv()
 elif get_args().task == 'train':
-    from training.trainer import trainer, get_model_alias
+    from training.trainer import trainer, get_classification_model_folder
     trainer.train()
-    folder_path = f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}_{get_model_alias(get_args().llm_generating_model_name)}"
-    trainer.save_model(f'{folder_path}/model')
+    trainer.save_model(f'{get_classification_model_folder()}/model')
 elif get_args().task == 'predict':
     from prediction import predict
     print(predict())

@@ -57,7 +57,7 @@ def evaluate_metrics_over_dataset(pipe: Pipeline, dataset, compute_metrics, max_
 
     # Iterate through the dataset
     for example in tqdm(dataset, desc="Evaluating"):
-        text = example['text']
+        text = example['text'] if 'text' in example else example['answer']
         label = example['label']
         labels.append(label)
 

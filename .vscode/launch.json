@@ -45,13 +45,21 @@
       "console": "integratedTerminal",
       "args": ["--task", "train", "--epochs", "1"]
     },
-        {
+    {
       "name": "Debug Main: Train (10 epoch)",
       "type": "debugpy",
       "request": "launch",
       "program": "main.py",
       "console": "integratedTerminal",
       "args": ["--task", "train", "--epochs", "10", "--source_dataset_type", "natural_questions_clean"]
+    },
+        {
+      "name": "Debug Main: Train (10 epoch - subset size in name)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "train", "--epochs", "10", "--include_training_subset_size_in_classifier_folder", "True"]
     },
     {
       "name": "Debug Main: Predict",
@@ -68,6 +76,14 @@
       "program": "main.py",
       "console": "integratedTerminal",
       "args": ["--task", "evaluate"]
+    },
+    {
+      "name": "Debug Main: Evaluate Baseline",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "args": ["--task", "evaluate", "--source_dataset_type", "natural_questions_clean", "--llm_generating_model_name", "microsoft/Phi-3.5-mini-instruct", "--is_baseline", "True"]
     },
     {
       "name": "Debug Main: Interpret",

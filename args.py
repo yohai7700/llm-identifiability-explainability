@@ -26,6 +26,7 @@ class Args:
     eval_dataset_type: str
     index: int
     is_baseline: bool
+    include_training_subset_size_in_classifier_folder: bool
 
 
 __KNOWN_CACHE_DIRS = {
@@ -65,6 +66,7 @@ def parse_args() -> Args:
     parser.add_argument("--llm_generating_model_name", type=str, default="Qwen/Qwen2-0.5B-Instruct", help="Model name for LLM generation")
     parser.add_argument("--training_llm_generating_model_name", type=str, default="Qwen/Qwen2-0.5B-Instruct", help="Model name for Training LLM generation")
     parser.add_argument("--classification_model_name", type=str, default="distilbert-base-uncased", help="Model name for classification")
+    parser.add_argument("--include_training_subset_size_in_classifier_folder", type=bool, default=False, help="Whether the model folder should include the training subset size in name")
 
     # Lora arguments
     parser.add_argument("--lora_rank", default=8, action="store_true", help="Rank used for LoRA algorithm")

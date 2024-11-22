@@ -1,4 +1,5 @@
 import torch
+from torch.utils.data import Subset
 
 from transformers import TrainingArguments, Trainer, logging, DataCollatorWithPadding
 from args import get_args
@@ -13,7 +14,10 @@ learning_rate = 1e-3
 batch_size = 8
 
 def get_classification_model_folder(training_llm = get_args().llm_generating_model_name):
-    return f"models/checkpoints/{get_args().classification_model_name}_{get_args().source_dataset_type}_{get_model_alias(training_llm)}"
+    dataset_name = get_args().source_dataset_type
+    if get_args().include_training_subset_size_in_classifier_folder:
+        dataset_name += f"_{get_args().training_subset_size}"
+    return f"models/checkpoints/{get_args().classification_model_name}_{dataset_name}_{get_model_alias(training_llm)}"
 
 training_args = TrainingArguments(
     output_dir=get_classification_model_folder(),
@@ -27,8 +31,8 @@ training_args = TrainingArguments(
     load_best_model_at_end=True,
 )
 
-train_dataset = ListDataset(torch.load(get_preprocessed_dataset_path('train'), weights_only=True))
-eval_dataset = ListDataset(torch.load(get_preprocessed_dataset_path('eval'), weights_only=True))
+train_dataset = Subset(ListDataset(torch.load(get_preprocessed_dataset_path('train'), weights_only=True)), range(get_args().training_subset_size))
+eval_dataset = Subset(ListDataset(torch.load(get_preprocessed_dataset_path('eval'), weights_only=True)), range(get_args().eval_subset_size))
 
 lora_model = attach_lora(model, tokenizer)
 trainer = Trainer(
