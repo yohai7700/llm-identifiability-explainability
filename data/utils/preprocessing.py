@@ -1,7 +1,10 @@
 from typing import Literal
 import torch
+from torch.utils.data.dataloader import DataLoader
 import os
 from tqdm import tqdm
+from transformers import pipeline
+
 
 from args import get_args
 from data.artificial_llm_text_dataset import ArtificialLlmTextDataset
@@ -32,18 +35,12 @@ def get_preprocessed_dataset_path(purpose: DatasetPurpose):
         folder_path = get_preprocessed_dataset_folder_path()
     return f'{folder_path}/{purpose}_dataset.pt'
 
-def iterate_data(dataset):
-    for i in tqdm(range(len(dataset))):
-        yield dataset[i]
-
 def preprocess():
     folder_path = get_preprocessed_dataset_folder_path()
     dataset_type = get_args().source_dataset_type
     os.makedirs(folder_path, exist_ok=True)
     train_dataset, eval_dataset = load_text_datasets(dataset_type)
     for label, dataset in [('train', train_dataset), ('eval', eval_dataset)]:
-        # if label == 'train':
-        #     continue
         llm_dataset = ArtificialLlmTextDataset(dataset, dataset_type)
 
         print(f"Preprocessing {label} dataset...")
@@ -52,6 +49,38 @@ def preprocess():
         torch.save(data_items, f'{folder_path}/{label}_dataset.pt')
 
     persist_to_csv()
+
+def parallel_preprocess():
+    folder_path = get_preprocessed_dataset_folder_path()
+    dataset_type = get_args().source_dataset_type
+    os.makedirs(folder_path, exist_ok=True)
+    pipe = pipeline("text-generation", model=get_args().llm_generating_model_name, trust_remote_code=False, device_map="cuda")
+    train_dataset, eval_dataset = load_text_datasets(dataset_type)
+    for label, dataset in [('train', train_dataset), ('eval', eval_dataset)]:
+        if label == 'train':
+            continue
+        print(f"Preprocessing {label} dataset...")
+        data_items = []
+
+        dataloader = DataLoader(dataset, batch_size=64, shuffle=False)
+        for batch in tqdm(dataloader):
+            prompts = [[
+                {"role": "user", "content": f"rewrite the following text: {text}"},
+            ] for text in batch['text']]
+            results = pipe(prompts, max_length=2000)
+            data_items.extend(results)
+        
+        torch.save(data_items, f'{folder_path}/test/{label}_dataset.pt')
+
+def yield_rewrite(dataset):
+    for i in tqdm(range(len(dataset))):
+        # This could come from a dataset, a database, a queue or HTTP request
+        # in a server
+        # Caveat: because this is iterative, you cannot use `num_workers > 1` variable
+        # to use multiple threads to preprocess data. You can still have 1 thread that
+        # does the preprocessing while the main runs the big inference
+        text = dataset[i]['text']
+        yield f"rewrite the following text: {text}"
 
 def persist_to_csv():
     dataset_type = get_args().source_dataset_type
